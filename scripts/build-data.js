@@ -2,7 +2,6 @@ var fs = require('fs'),
     emojiData = require('emoji-datasource'),
     emojiLib = require('emojilib'),
     inflection = require('inflection'),
-    LZString = require('lz-string'),
     mkdirp = require('mkdirp')
 
 var categories = ['People', 'Nature', 'Foods', 'Activity', 'Places', 'Objects', 'Symbols', 'Flags'],
