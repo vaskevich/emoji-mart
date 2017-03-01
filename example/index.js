@@ -10,8 +10,6 @@ class Example extends React.Component {
       emojiSize: 24,
       perLine: 9,
       skin: 1,
-      native: false,
-      set: 'apple',
       hidden: false,
     }
   }
@@ -46,24 +44,6 @@ class Example extends React.Component {
       </div>
 
       <div className="row">
-        {['apple', 'google', 'twitter', 'emojione'].map((set) => {
-          var props = { disabled: set == this.state.set }
-
-          return <button
-            key={set}
-            value={set}
-            onClick={() => this.setState({ set: set })}
-            {...props}>
-            <Emoji
-              set={set}
-              size={24}
-              emoji='grinning'
-            />
-          </button>
-        })}
-      </div>
-
-      <div className="row">
         <button
           onClick={() => this.setState({ hidden: !this.state.hidden })}
         >{this.state.hidden ? 'Mount' : 'Unmount'}</button>
@@ -82,8 +62,6 @@ class Example extends React.Component {
 <br />  emojiSize<Operator>=</Operator>&#123;<Variable>{this.state.emojiSize}</Variable>&#125; <input type='range' data-key='emojiSize' onChange={this.handleInput.bind(this)} min='16' max='64' value={this.state.emojiSize} />
 <br />  perLine<Operator>=</Operator>&#123;<Variable>{this.state.perLine}</Variable>&#125; {this.state.perLine < 10 ? '  ' : ' '} <input type='range' data-key='perLine' onChange={this.handleInput.bind(this)} min='7' max='16' value={this.state.perLine} />
 <br />  skin<Operator>=</Operator>&#123;<Variable>{this.state.skin}</Variable>&#125;       <input type='range' data-key='skin' onChange={this.handleInput.bind(this)} min='1' max='6' value={this.state.skin} />
-<br />  native<Operator>=</Operator>&#123;<Variable>{this.state.native ? 'true' : 'false'}</Variable>&#125;{this.state.native ? ' ' : ''} <input type='checkbox' data-key='native' onChange={this.handleInput.bind(this)} value={this.state.native} />
-<br />  set<Operator>=</Operator><String>'{this.state.set}'</String>
 <br />  onClick<Operator>=</Operator>&#123;(<Variable>emoji</Variable>) => console.log(<Variable>emoji</Variable>)&#125;
 <br /><Operator>/&gt;</Operator>
       </pre>
@@ -93,8 +71,6 @@ class Example extends React.Component {
           emojiSize={this.state.emojiSize}
           perLine={this.state.perLine}
           skin={this.state.skin}
-          native={this.state.native}
-          set={this.state.set}
           onClick={(emoji) => console.log(emoji)}
         />
       }
@@ -119,7 +95,6 @@ class Example extends React.Component {
           <Emoji
             emoji='thumbsup'
             size={64}
-            set={this.state.set}
           />
         </span>
       </div>
@@ -142,7 +117,6 @@ class Example extends React.Component {
           <Emoji
             emoji=':thumbsup:'
             size={64}
-            set={this.state.set}
           />
         </span>
       </div>
@@ -165,7 +139,6 @@ class Example extends React.Component {
           <Emoji
             emoji=':thumbsup::skin-tone-3:'
             size={64}
-            set={this.state.set}
           />
         </span>
       </div>
@@ -181,7 +154,6 @@ class Example extends React.Component {
   <br /><Operator>&lt;</Operator><Variable>Emoji</Variable>
   <br />  emoji<Operator>=</Operator><String>':thumbsup::skin-tone-3:'</String>
   <br />  size<Operator>=</Operator>&#123;<Variable>{64}</Variable>&#125;
-  <br />  native<Operator>=</Operator>&#123;<Variable>{'true'}</Variable>&#125;
   <br /><Operator>/&gt;</Operator>
         </pre>
 
@@ -189,7 +161,6 @@ class Example extends React.Component {
           <Emoji
             emoji=':thumbsup::skin-tone-3:'
             size={64}
-            native={true}
           />
         </span>
       </div>

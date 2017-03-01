@@ -5,7 +5,7 @@ to reduce the size of the package.
 To give an idea of the difference in space, as of 2/28/17:
 
 * `emoji-mart` bundle sizes: 581K and 488K (minified)
-* `emoji-mart-lite` bundle sizes: 581K and 488K (minified)
+* `emoji-mart-lite` bundle sizes: 170K and 120K (minified)
 
 
 <div align="center">

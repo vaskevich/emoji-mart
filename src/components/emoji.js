@@ -1,5 +1,5 @@
 import React from 'react'
-import data from '../../data'
+import data from '../data'
 
 import { getData, getSanitizedData, unifiedToNative } from '../utils'
 
@@ -16,27 +16,18 @@ export default class Emoji extends React.Component {
     return (
       this.hasSkinVariations && nextProps.skin != this.props.skin ||
       nextProps.size != this.props.size ||
-      nextProps.native != this.props.native ||
-      nextProps.set != this.props.set ||
       nextProps.emoji != this.props.emoji
     )
   }
 
-  getPosition() {
-    var { sheet_x, sheet_y } = this.getData(),
-        multiply = 100 / (SHEET_COLUMNS - 1)
-
-    return `${multiply * sheet_x}% ${multiply * sheet_y}%`
-  }
-
   getData() {
-    var { emoji, skin, set } = this.props
-    return getData(emoji, skin, set)
+    var { emoji, skin } = this.props
+    return getData(emoji, skin)
   }
 
   getSanitizedData() {
-    var { emoji, skin, set } = this.props
-    return getSanitizedData(emoji, skin, set)
+    var { emoji, skin } = this.props
+    return getSanitizedData(emoji, skin)
   }
 
   handleClick(e) {
@@ -61,7 +52,7 @@ export default class Emoji extends React.Component {
   }
 
   render() {
-    var { set, size, sheetSize, native, forceSize, onOver, onLeave, backgroundImageFn } = this.props,
+    var { size, forceSize, onOver, onLeave } = this.props,
         { unified } = this.getData(),
         style = {},
         children = this.props.children
@@ -70,24 +61,13 @@ export default class Emoji extends React.Component {
       return null
     }
 
-    if (native && unified) {
-      style = { fontSize: size }
-      children = unifiedToNative(unified)
+    style = { fontSize: size }
+    children = unifiedToNative(unified)
 
-      if (forceSize) {
-        style.display = 'inline-block'
-        style.width = size
-        style.height = size
-      }
-    } else {
-      style = {
-        width: size,
-        height: size,
-        display: 'inline-block',
-        backgroundImage: `url(${backgroundImageFn(set, sheetSize)})`,
-        backgroundSize: `${100 * SHEET_COLUMNS}%`,
-        backgroundPosition: this.getPosition(),
-      }
+    if (forceSize) {
+      style.display = 'inline-block'
+      style.width = size
+      style.height = size
     }
 
     return <span
@@ -104,12 +84,8 @@ Emoji.propTypes = {
   onOver: React.PropTypes.func,
   onLeave: React.PropTypes.func,
   onClick: React.PropTypes.func,
-  backgroundImageFn: React.PropTypes.func,
-  native: React.PropTypes.bool,
   forceSize: React.PropTypes.bool,
   skin: React.PropTypes.oneOf([1, 2, 3, 4, 5, 6]),
-  sheetSize: React.PropTypes.oneOf([16, 20, 32, 64]),
-  set: React.PropTypes.oneOf(['apple', 'google', 'twitter', 'emojione']),
   size: React.PropTypes.number.isRequired,
   emoji: React.PropTypes.oneOfType([
     React.PropTypes.string,
@@ -119,11 +95,7 @@ Emoji.propTypes = {
 
 Emoji.defaultProps = {
   skin: 1,
-  set: 'apple',
-  sheetSize: 64,
-  native: false,
   forceSize: false,
-  backgroundImageFn: ((set, sheetSize) => `https://unpkg.com/emoji-datasource@${EMOJI_DATASOURCE_VERSION}/sheet_${set}_${sheetSize}.png`),
   onOver: (() => {}),
   onLeave: (() => {}),
   onClick: (() => {}),

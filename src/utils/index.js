@@ -1,4 +1,4 @@
-import data from '../../data'
+import data from '../data'
 
 const COLONS_REGEX = /^(?:\:([^\:]+)\:)(?:\:skin-tone-(\d)\:)?$/
 const SKINS = [
@@ -36,7 +36,7 @@ function getSanitizedData() {
   return sanitize(getData(...arguments))
 }
 
-function getData(emoji, skin, set) {
+function getData(emoji, skin) {
   var emojiData = {}
 
   if (typeof emoji == 'string') {
@@ -68,25 +68,11 @@ function getData(emoji, skin, set) {
     }
   }
 
-  if (emojiData.skin_variations && skin > 1 && set) {
+  if (emojiData.skin_variations && skin > 1) {
     emojiData = JSON.parse(JSON.stringify(emojiData))
-
-    var skinKey = SKINS[skin - 1],
-        variationKey = `${emojiData.unified}-${skinKey}`,
-        variationData = emojiData.skin_variations[variationKey]
-
-    if (!variationData.variations && emojiData.variations) {
-      delete emojiData.variations
-    }
-
-    if (variationData[`has_img_${set}`]) {
-      emojiData.skin_tone = skin
-
-      for (let k in variationData) {
-        let v = variationData[k]
-        emojiData[k] = v
-      }
-    }
+    emojiData.skin_tone = skin
+    emojiData.unified = `${emojiData.unified}-${SKINS[skin - 1]}`;
+    delete emojiData.variations;
   }
 
   if (emojiData.variations && emojiData.variations.length) {
