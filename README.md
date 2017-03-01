@@ -4,9 +4,10 @@ to reduce the size of the package.
 
 To give an idea of the difference in space, as of 2/28/17:
 
-* `emoji-mart` bundle sizes: 581K and 488K (minified)
-* `emoji-mart-lite` bundle sizes: 170K and 120K (minified)
+* `emoji-mart` bundle sizes: 488k (minified), 84k (when gzipped)
+* `emoji-mart-lite` bundle sizes: 170k (minified), 45k (when gzipped)
 
+Available on npm!
 
 <div align="center">
   <br><b>Emoji Mart</b> is a Slack-like customizable<br>emoji picker component for React
