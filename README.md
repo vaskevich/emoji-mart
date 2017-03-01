@@ -1,3 +1,13 @@
+# `emoji-mart-lite`
+`emoji-mart-lite` is a fork of `emoji-mart` that only supports native emojis, and prunes additional code/metadata
+to reduce the size of the package.
+
+To give an idea of the difference in space, as of 2/28/17:
+
+* `emoji-mart` bundle sizes: 581K and 488K (minified)
+* `emoji-mart-lite` bundle sizes: 581K and 488K (minified)
+
+
 <div align="center">
   <br><b>Emoji Mart</b> is a Slack-like customizable<br>emoji picker component for React
   <br>[<a href="https://missive.github.io/emoji-mart">Demo</a>]
