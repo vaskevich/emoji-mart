@@ -2,7 +2,6 @@ var fs = require('fs'),
     emojiData = require('emoji-datasource'),
     emojiLib = require('emojilib'),
     inflection = require('inflection'),
-    LZString = require('lz-string'),
     mkdirp = require('mkdirp')
 
 var categories = ['People', 'Nature', 'Foods', 'Activity', 'Places', 'Objects', 'Symbols', 'Flags'],
@@ -107,8 +106,8 @@ flags.emojis.sort()
 mkdirp('data', (err) => {
   if (err) throw err
 
-  const compressedData = LZString.compressToBase64(JSON.stringify(data))
-  fs.writeFile('data/index.js', `export default '${compressedData}'`, (err) => {
+  const stringifiedData = JSON.stringify(data).replace(/\"([A-Za-z_]+)\":/g, '$1:')
+  fs.writeFile('data/index.js', `export default ${stringifiedData}`, (err) => {
     if (err) throw err
   })
 })

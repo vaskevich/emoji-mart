@@ -1,7 +1,4 @@
-import compressedData from '../data';
-const LZString = require('lz-string');
-
-const data = JSON.parse(LZString.decompressFromBase64(compressedData));
+import data from '../data';
 
 function renameProp(o, key, newKey, opt_default) {
   o[newKey] = o[key] || opt_default;
