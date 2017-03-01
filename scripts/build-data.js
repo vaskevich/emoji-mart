@@ -2,6 +2,7 @@ var fs = require('fs'),
     emojiData = require('emoji-datasource'),
     emojiLib = require('emojilib'),
     inflection = require('inflection'),
+    LZString = require('lz-string'),
     mkdirp = require('mkdirp')
 
 var categories = ['People', 'Nature', 'Foods', 'Activity', 'Places', 'Objects', 'Symbols', 'Flags'],
@@ -19,6 +20,13 @@ emojiData.sort((a, b) => {
 
   return aTest - bTest
 })
+
+function renameProp(o, key, newKey) {
+  if (o[key]) {
+    o[newKey] = o[key];
+    delete o[key];
+  }
+}
 
 emojiData.forEach((datum) => {
   var category = datum.category,
@@ -71,6 +79,7 @@ emojiData.forEach((datum) => {
   addToSearch(datum.emoticons, false)
 
   datum.search = datum.search.join(',')
+  datum.keywords = keywords
 
   if (datum.category == 'Skin Tones') {
     data.skins[datum.short_name] = datum
@@ -90,17 +99,27 @@ emojiData.forEach((datum) => {
   delete datum.softbank
   delete datum.google
   delete datum.image
+  delete datum.has_img_apple
+  delete datum.has_img_google
+  delete datum.has_img_twitter
+  delete datum.has_img_emojione
+  delete datum.sheet_x
+  delete datum.sheet_y
   delete datum.short_name
   delete datum.category
   delete datum.sort_order
 
-  for (let key in datum) {
-    let value = datum[key]
-
-    if (Array.isArray(value) && !value.length) {
-      delete datum[key]
-    }
+  if (datum.skin_variations) {
+    datum.skin_variations = {}
   }
+
+  renameProp(datum, 'name', 'n')
+  renameProp(datum, 'unified', 'u')
+  renameProp(datum, 'variations', 'v')
+  renameProp(datum, 'emoticons', 'e')
+  renameProp(datum, 'keywords', 'k')
+  renameProp(datum, 'short_names', 's')
+  renameProp(datum, 'skin_variations', 't')
 })
 
 var flags = data.categories[categoriesIndex['Flags']];

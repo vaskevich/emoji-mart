@@ -1,7 +1,7 @@
 import '../vendor/raf-polyfill'
 
 import React from 'react'
-import data from '../../data'
+import data from '../data'
 
 import store from '../utils/store'
 import frequently from '../utils/frequently'
@@ -261,7 +261,7 @@ export default class Picker extends React.Component {
   }
 
   render() {
-    var { perLine, emojiSize, set, sheetSize, style, title, emoji, color, native, backgroundImageFn, emojisToShowFilter } = this.props,
+    var { perLine, emojiSize, style, title, emoji, color, emojisToShowFilter } = this.props,
         { skin } = this.state,
         width = (perLine * (emojiSize + 12)) + 12 + 2
 
@@ -291,17 +291,12 @@ export default class Picker extends React.Component {
             name={category.name}
             emojis={category.emojis}
             perLine={perLine}
-            native={native}
             hasStickyPosition={this.hasStickyPosition}
             i18n={this.i18n}
             emojiProps={{
-              native: native,
               skin: skin,
               size: emojiSize,
-              set: set,
-              sheetSize: sheetSize,
-              forceSize: native,
-              backgroundImageFn: backgroundImageFn,
+              forceSize: true,
               onOver: this.handleEmojiOver.bind(this),
               onLeave: this.handleEmojiLeave.bind(this),
               onClick: this.handleEmojiClick.bind(this),
@@ -316,12 +311,8 @@ export default class Picker extends React.Component {
           title={title}
           emoji={emoji}
           emojiProps={{
-            native: native,
             size: 38,
             skin: skin,
-            set: set,
-            sheetSize: sheetSize,
-            backgroundImageFn: backgroundImageFn,
           }}
           skinsProps={{
             skin: skin,
@@ -342,11 +333,7 @@ Picker.propTypes = {
   title: React.PropTypes.string,
   emoji: React.PropTypes.string,
   color: React.PropTypes.string,
-  set: Emoji.propTypes.set,
   skin: Emoji.propTypes.skin,
-  native: React.PropTypes.bool,
-  backgroundImageFn: Emoji.propTypes.backgroundImageFn,
-  sheetSize: Emoji.propTypes.sheetSize,
   emojisToShowFilter: React.PropTypes.func,
 }
 
@@ -359,10 +346,6 @@ Picker.defaultProps = {
   title: 'Emoji Mart™',
   emoji: 'department_store',
   color: '#ae65c5',
-  set: Emoji.defaultProps.set,
   skin: Emoji.defaultProps.skin,
-  native: Emoji.defaultProps.native,
-  sheetSize: Emoji.defaultProps.sheetSize,
-  backgroundImageFn: Emoji.defaultProps.backgroundImageFn,
   emojisToShowFilter: (codePoint) => true,
 }
