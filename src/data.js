@@ -3,11 +3,9 @@ const LZString = require('lz-string');
 
 const data = JSON.parse(LZString.decompressFromBase64(compressedData));
 
-function renameProp(o, key, newKey) {
-  if (o[key]) {
-    o[newKey] = o[key];
-    delete o[key];
-  }
+function renameProp(o, key, newKey, opt_default) {
+  o[newKey] = o[key] || opt_default;
+  delete o[key];
 }
 
 const addToSearch = (datum, strings, split) => {
@@ -22,17 +20,30 @@ const addToSearch = (datum, strings, split) => {
   })
 }
 
-for (let key in data.emojis) {
-  if (data.emojis.hasOwnProperty(key)) {
-    const datum = data.emojis[key];
+data.short_names = {};
+data.emojis = {};
 
+data.categories.forEach(category => {
+  for (let i = 0; i < category.emojis.length; i++) {
+    const datum = category.emojis[i];
+
+    renameProp(datum, 'a', 'short_name')
     renameProp(datum, 'n', 'name')
     renameProp(datum, 'u', 'unified')
-    renameProp(datum, 'v', 'variations')
-    renameProp(datum, 'e', 'emoticons')
-    renameProp(datum, 'k', 'keywords')
-    renameProp(datum, 's', 'short_names')
-    renameProp(datum, 't', 'skin_variations')
+    renameProp(datum, 'v', 'variations', [])
+    renameProp(datum, 'e', 'emoticons', [])
+    renameProp(datum, 'k', 'keywords', [])
+    renameProp(datum, 's', 'short_names', [])
+    renameProp(datum, 't', 'skin_variations', [])
+
+    data.emojis[datum.short_name] = datum;
+    category.emojis[i] = datum.short_name;
+
+    datum.short_names.forEach((short_name, i) => {
+      if (i != 0) {
+        data.short_names[short_name] = datum.short_name;
+      }
+    })
 
     datum.search = []
     addToSearch(datum, datum.short_names, true)
@@ -41,6 +52,6 @@ for (let key in data.emojis) {
     addToSearch(datum, datum.emoticons, false)
     datum.search = datum.search.join(',')
   }
-}
+});
 
 export default data

@@ -6,7 +6,7 @@ var fs = require('fs'),
     mkdirp = require('mkdirp')
 
 var categories = ['People', 'Nature', 'Foods', 'Activity', 'Places', 'Objects', 'Symbols', 'Flags'],
-    data = { categories: [], emojis: {}, skins: {}, short_names: {} },
+    data = { categories: [], skins: {} },
     categoriesIndex = {}
 
 categories.forEach((category, i) => {
@@ -21,7 +21,11 @@ emojiData.sort((a, b) => {
   return aTest - bTest
 })
 
-function renameProp(o, key, newKey) {
+function renameProp(o, key, newKey, deleteIfEmpty) {
+  if (deleteIfEmpty && !o[key] || !o[key].length) {
+    delete o[key];
+  }
+
   if (o[key]) {
     o[newKey] = o[key];
     delete o[key];
@@ -85,14 +89,8 @@ emojiData.forEach((datum) => {
     data.skins[datum.short_name] = datum
   } else {
     categoryIndex = categoriesIndex[category]
-    data.categories[categoryIndex].emojis.push(datum.short_name)
-    data.emojis[datum.short_name] = datum
+    data.categories[categoryIndex].emojis.push(datum)
   }
-
-  datum.short_names.forEach((short_name, i) => {
-    if (i == 0) { return }
-    data.short_names[short_name] = datum.short_name
-  })
 
   delete datum.docomo
   delete datum.au
@@ -105,21 +103,21 @@ emojiData.forEach((datum) => {
   delete datum.has_img_emojione
   delete datum.sheet_x
   delete datum.sheet_y
-  delete datum.short_name
   delete datum.category
   delete datum.sort_order
 
-  if (datum.skin_variations) {
-    datum.skin_variations = {}
-  }
-
+  renameProp(datum, 'short_name', 'a')
   renameProp(datum, 'name', 'n')
   renameProp(datum, 'unified', 'u')
-  renameProp(datum, 'variations', 'v')
-  renameProp(datum, 'emoticons', 'e')
-  renameProp(datum, 'keywords', 'k')
-  renameProp(datum, 'short_names', 's')
-  renameProp(datum, 'skin_variations', 't')
+  renameProp(datum, 'variations', 'v', true)
+  renameProp(datum, 'emoticons', 'e', true)
+  renameProp(datum, 'keywords', 'k', true)
+  renameProp(datum, 'short_names', 's', true)
+
+  if (datum.skin_variations) {
+    datum.skin_variations = {}
+    renameProp(datum, 'skin_variations', 't')
+  }
 })
 
 var flags = data.categories[categoriesIndex['Flags']];
