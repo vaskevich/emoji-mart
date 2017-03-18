@@ -31,7 +31,7 @@ data.categories.forEach(category => {
     renameProp(datum, 'e', 'emoticons', [])
     renameProp(datum, 'k', 'keywords', [])
     renameProp(datum, 's', 'short_names', [])
-    renameProp(datum, 't', 'skin_variations', [])
+    renameProp(datum, 't', 'skin_variations')
 
     data.emojis[datum.short_name] = datum;
     category.emojis[i] = datum.short_name;

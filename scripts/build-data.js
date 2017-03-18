@@ -21,7 +21,7 @@ emojiData.sort((a, b) => {
 })
 
 function renameProp(o, key, newKey, deleteIfEmpty) {
-  if (deleteIfEmpty && !o[key] || !o[key].length) {
+  if (deleteIfEmpty && (!o[key] || !Object.keys(o[key]).length)) {
     delete o[key];
   }
 
@@ -114,7 +114,7 @@ emojiData.forEach((datum) => {
   renameProp(datum, 'short_names', 's', true)
 
   if (datum.skin_variations) {
-    datum.skin_variations = {}
+    datum.skin_variations = {};
     renameProp(datum, 'skin_variations', 't')
   }
 })
