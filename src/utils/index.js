@@ -69,14 +69,10 @@ function getData(emoji, skin) {
     }
   }
 
-<<<<<<< HEAD
   emojiData.emoticons || (emojiData.emoticons = [])
   emojiData.variations || (emojiData.variations = [])
 
-  if (emojiData.skin_variations && skin > 1 && set) {
-=======
   if (emojiData.skin_variations && skin > 1) {
->>>>>>> First pass of making it lite: down to 120K
     emojiData = JSON.parse(JSON.stringify(emojiData))
     emojiData.skin_tone = skin
     emojiData.unified = `${emojiData.unified}-${SKINS[skin - 1]}`;

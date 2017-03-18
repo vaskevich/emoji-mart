@@ -63,25 +63,6 @@ emojiData.forEach((datum) => {
     keywords = emojiLib.lib[datum.short_name].keywords
   }
 
-  datum.search = []
-  var addToSearch = (strings, split) => {
-    (Array.isArray(strings) ? strings : [strings]).forEach((string) => {
-      (split ? string.split(/[-|_|\s]+/) : [string]).forEach((s) => {
-        s = s.toLowerCase()
-
-        if (datum.search.indexOf(s) == -1) {
-          datum.search.push(s)
-        }
-      })
-    })
-  }
-
-  addToSearch(datum.short_names, true)
-  addToSearch(datum.name, true)
-  addToSearch(keywords, false)
-  addToSearch(datum.emoticons, false)
-
-  datum.search = datum.search.join(',')
   datum.keywords = keywords
 
   if (datum.category == 'Skin Tones') {
