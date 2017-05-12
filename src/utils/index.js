@@ -1,10 +1,7 @@
 import data from '../data'
 
 const COLONS_REGEX = /^(?:\:([^\:]+)\:)(?:\:skin-tone-(\d)\:)?$/
-const SKINS = [
-  '1F3FA', '1F3FB', '1F3FC',
-  '1F3FD', '1F3FE', '1F3FF',
-]
+const SKINS = ['1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF']
 
 function unifiedToNative(unified) {
   var unicodes = unified.split('-'),
@@ -13,7 +10,7 @@ function unifiedToNative(unified) {
   return String.fromCodePoint(...codePoints)
 }
 
-function sanitize(emoji) {
+function sanitize(emoji, {skin, includeSkinVariations = false, includeShortcuts = false} = {}) {
   var { name, short_names, skin_tone, skin_variations, emoticons, unified } = emoji,
       id = short_names[0],
       colons = `:${id}:`
@@ -22,7 +19,7 @@ function sanitize(emoji) {
     colons += `:skin-tone-${skin_tone}:`
   }
 
-  return {
+  const result = {
     id,
     name,
     colons,
@@ -31,10 +28,27 @@ function sanitize(emoji) {
     skin: skin_tone || (skin_variations ? 1 : null),
     native: unifiedToNative(unified),
   }
+
+  if (includeSkinVariations && skin_variations) {
+    result.skinVariations = _.map(SKINS, (_skin, index) => {
+      const skinVariationUnified = getSkinVariationUnified(unified, index + 2).toLowerCase()
+      return {unified: skinVariationUnified, native: unifiedToNative(skinVariationUnified)}
+    });
+  }
+
+  if (includeShortcuts) {
+    result.shortcuts = short_names.map(s => `:${s}:`)
+  }
+
+  return result
 }
 
-function getSanitizedData() {
-  return sanitize(getData(...arguments))
+function getSanitizedData(emoji, {skin, includeSkinVariations = false, includeShortcuts = false} = {}) {
+  return sanitize(getData(emoji, skin), {includeSkinVariations, includeShortcuts})
+}
+
+function getSkinVariationUnified(baseUnified, skin) {
+  return `${baseUnified}-${SKINS[skin - 2]}`
 }
 
 function getData(emoji, skin) {
@@ -75,7 +89,7 @@ function getData(emoji, skin) {
   if (emojiData.skin_variations && skin > 1) {
     emojiData = JSON.parse(JSON.stringify(emojiData))
     emojiData.skin_tone = skin
-    emojiData.unified = `${emojiData.unified}-${SKINS[skin - 1]}`;
+    emojiData.unified = getSkinVariationUnified(emojiData.unified, skin)
     delete emojiData.variations;
   }
 

@@ -17,7 +17,7 @@ for (let emoji in data.emojis) {
     }
   }
 
-  emojisList[id] = getSanitizedData(id)
+  emojisList[id] = getSanitizedData(id, {includeSkinVariations: true, includeShortcuts: true})
 }
 
 function search(value, emojisToShowFilter = () => true, maxResults = 75) {
