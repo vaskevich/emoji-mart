@@ -30,7 +30,7 @@ function sanitize(emoji, {skin, includeSkinVariations = false, includeShortcuts 
   }
 
   if (includeSkinVariations && skin_variations) {
-    result.skinVariations = _.map(SKINS, (_skin, index) => {
+    result.skinVariations = SKINS.map((_skin, index) => {
       const skinVariationUnified = getSkinVariationUnified(unified, index + 2).toLowerCase()
       return {unified: skinVariationUnified, native: unifiedToNative(skinVariationUnified)}
     });
