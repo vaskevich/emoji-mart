@@ -27,7 +27,7 @@ export default class Emoji extends React.Component {
 
   getSanitizedData() {
     var { emoji, skin } = this.props
-    return getSanitizedData(emoji, skin)
+    return getSanitizedData(emoji, {skin})
   }
 
   handleClick(e) {
