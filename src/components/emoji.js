@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import data from '../data'
 
 import { getData, getSanitizedData, unifiedToNative } from '../utils'
@@ -81,15 +82,15 @@ export default class Emoji extends React.Component {
 }
 
 Emoji.propTypes = {
-  onOver: React.PropTypes.func,
-  onLeave: React.PropTypes.func,
-  onClick: React.PropTypes.func,
-  forceSize: React.PropTypes.bool,
-  skin: React.PropTypes.oneOf([1, 2, 3, 4, 5, 6]),
-  size: React.PropTypes.number.isRequired,
-  emoji: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.object,
+  onOver: PropTypes.func,
+  onLeave: PropTypes.func,
+  onClick: PropTypes.func,
+  forceSize: PropTypes.bool,
+  skin: PropTypes.oneOf([1, 2, 3, 4, 5, 6]),
+  size: PropTypes.number.isRequired,
+  emoji: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
   ]).isRequired,
 }
 

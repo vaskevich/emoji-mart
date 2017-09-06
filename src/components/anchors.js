@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import InlineSVG from 'svg-inline-react'
 
 import * as SVGs from '../svgs'
@@ -48,8 +49,8 @@ export default class Anchors extends React.Component {
 }
 
 Anchors.propTypes = {
-  categories: React.PropTypes.array,
-  onAnchorClick: React.PropTypes.func,
+  categories: PropTypes.array,
+  onAnchorClick: PropTypes.func,
 }
 
 Anchors.defaultProps = {

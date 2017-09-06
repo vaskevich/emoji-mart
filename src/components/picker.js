@@ -1,6 +1,7 @@
 import '../vendor/raf-polyfill'
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import data from '../data'
 
 import store from '../utils/store'
@@ -325,16 +326,16 @@ export default class Picker extends React.Component {
 }
 
 Picker.propTypes = {
-  onClick: React.PropTypes.func,
-  perLine: React.PropTypes.number,
-  emojiSize: React.PropTypes.number,
-  i18n: React.PropTypes.object,
-  style: React.PropTypes.object,
-  title: React.PropTypes.string,
-  emoji: React.PropTypes.string,
-  color: React.PropTypes.string,
+  onClick: PropTypes.func,
+  perLine: PropTypes.number,
+  emojiSize: PropTypes.number,
+  i18n: PropTypes.object,
+  style: PropTypes.object,
+  title: PropTypes.string,
+  emoji: PropTypes.string,
+  color: PropTypes.string,
   skin: Emoji.propTypes.skin,
-  emojisToShowFilter: React.PropTypes.func,
+  emojisToShowFilter: PropTypes.func,
 }
 
 Picker.defaultProps = {

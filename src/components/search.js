@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import emojiIndex from '../utils/emoji-index'
 
 export default class Search extends React.Component {
@@ -27,9 +28,9 @@ export default class Search extends React.Component {
 }
 
 Search.propTypes = {
-  onSearch: React.PropTypes.func,
-  maxResults: React.PropTypes.number,
-  emojisToShowFilter: React.PropTypes.func
+  onSearch: PropTypes.func,
+  maxResults: PropTypes.number,
+  emojisToShowFilter: PropTypes.func
 }
 
 Search.defaultProps = {
