@@ -1,6 +1,6 @@
 {
   "name": "emoji-mart-lite",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "description": "Customizable Slack-like emoji picker for React (lite: native emoji only)",
   "main": "dist/emoji-mart-lite.js",
   "repository": {
@@ -45,7 +45,7 @@
     "react-dom": "15.2.0",
     "rimraf": "2.5.2",
     "svg-inline-loader": "0.4.1",
-    "svg-inline-react": "1.0.2",
+    "svg-inline-react": "3.0.0",
     "webpack": "1.12.14"
   },
   "scripts": {
