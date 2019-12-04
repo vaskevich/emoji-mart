@@ -68,7 +68,7 @@ export default class Picker extends React.Component {
     this.categories = CATEGORIES;
   }
 
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     if (props.skin && !store.get('skin')) {
       this.setState({ skin: props.skin })
     }
