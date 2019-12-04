@@ -44,7 +44,7 @@
     "react-dom": "^16.10.2",
     "rimraf": "2.5.2",
     "svg-inline-loader": "0.4.1",
-    "svg-inline-react": "3.0.0",
+    "svg-inline-react": "3.2.0",
     "webpack": "1.12.14"
   },
   "scripts": {
