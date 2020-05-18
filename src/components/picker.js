@@ -10,8 +10,8 @@ import { deepMerge } from '../utils'
 
 import { Anchors, Category, Emoji, Preview, Search } from '.'
 
-const RECENT_CATEGORY = { name: 'Recent', emojis: null }
-const SEARCH_CATEGORY = { name: 'Search', emojis: null, anchor: RECENT_CATEGORY }
+const RECENT_CATEGORY = { id: 'recent', name: 'Recent', emojis: null }
+const SEARCH_CATEGORY = { id: 'search', name: 'Search', emojis: null, anchor: RECENT_CATEGORY }
 
 let CATEGORIES = [];
 
@@ -55,7 +55,8 @@ export default class Picker extends React.Component {
       if (new_emojis.length) {
         let new_hash = {
           emojis: new_emojis,
-          name: hash.name
+          name: hash.name,
+          id: hash.id
         }
         filteredCategories.push(new_hash);
       }
@@ -289,6 +290,7 @@ export default class Picker extends React.Component {
           return <Category
             ref={`category-${i}`}
             key={category.name}
+            id={category.id}
             name={category.name}
             emojis={category.emojis}
             perLine={perLine}

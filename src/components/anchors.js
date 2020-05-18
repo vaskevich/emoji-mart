@@ -24,7 +24,7 @@ export default class Anchors extends React.Component {
 
     return <div className='emoji-mart-anchors'>
       {categories.map((category, i) => {
-        var { name, anchor } = category,
+        var { id, name, anchor } = category,
             isSelected = name == selected
 
         if (anchor) {
@@ -34,12 +34,12 @@ export default class Anchors extends React.Component {
         return (
           <span
             key={name}
-            title={i18n.categories[name.toLowerCase()]}
+            title={i18n.categories[id]}
             onClick={() => onAnchorClick(category, i)}
             className={`emoji-mart-anchor ${isSelected ? 'emoji-mart-anchor-selected' : ''}`}
             style={{ color: isSelected ? color : null }}
           >
-            <InlineSVG src={SVGs[name]} />
+            <InlineSVG src={SVGs[id[0].toUpperCase() + id.slice(1)]} />
             <span className='emoji-mart-anchor-bar' style={{ backgroundColor: color }}></span>
           </span>
         )
