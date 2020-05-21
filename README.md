@@ -1,3 +1,5 @@
+# THIS FORK IS NO LONGER MAINTAINED. CONSIDER USING `emoji-mart` INSTEAD
+
 # `emoji-mart-lite`
 `emoji-mart-lite` is a fork of `emoji-mart` that only supports native emojis, and prunes additional code/metadata
 to reduce the size of the package.

@@ -4,24 +4,13 @@ var fs = require('fs'),
     inflection = require('inflection'),
     mkdirp = require('mkdirp')
 
-var categories = [
-  ['Smileys & Emotion', 'smileys'],
-  ['People & Body', 'people'],
-  ['Animals & Nature', 'nature'],
-  ['Food & Drink', 'foods'],
-  ['Activities', 'activity'],
-  ['Travel & Places', 'places'],
-  ['Objects', 'objects'],
-  ['Symbols', 'symbols'],
-  ['Flags', 'flags'],
-]
-
-var data = { categories: [], skins: {} }, categoriesIndex = {}
+var categories = ['People', 'Nature', 'Foods', 'Activity', 'Places', 'Objects', 'Symbols', 'Flags'],
+    data = { categories: [], skins: {} },
+    categoriesIndex = {}
 
 categories.forEach((category, i) => {
-  let [name, id] = category
-  data.categories[i] = { id: id, name: name, emojis: [] }
-  categoriesIndex[name] = i
+  data.categories[i] = { name: category, emojis: [] }
+  categoriesIndex[category] = i
 })
 
 emojiData.sort((a, b) => {
@@ -92,13 +81,10 @@ emojiData.forEach((datum) => {
   delete datum.has_img_google
   delete datum.has_img_twitter
   delete datum.has_img_emojione
-  delete datum.has_img_facebook
   delete datum.sheet_x
   delete datum.sheet_y
   delete datum.category
   delete datum.sort_order
-  delete datum.non_qualified
-  delete datum.added_in
 
   renameProp(datum, 'short_name', 'a')
   renameProp(datum, 'name', 'n')
@@ -115,26 +101,7 @@ emojiData.forEach((datum) => {
 })
 
 var flags = data.categories[categoriesIndex['Flags']];
-flags.emojis = flags.emojis
-  .filter((flag) => {
-    // Until browsers support Flag UN
-    if (flag == 'flag-un') return
-    return true
-  })
-  .sort()
-
-// Merge “Smileys & Emotion” and “People & Body” into a single category
-let smileys = data.categories[0]
-let people = data.categories[1]
-let smileysAndPeople = { id: 'people', name: 'Smileys & People' }
-smileysAndPeople.emojis = []
-  .concat(smileys.emojis.slice(0, 114))
-  .concat(people.emojis)
-  .concat(smileys.emojis.slice(114))
-
-data.categories.unshift(smileysAndPeople)
-data.categories.splice(1, 2)
-
+flags.emojis.sort()
 
 mkdirp('data', (err) => {
   if (err) throw err
